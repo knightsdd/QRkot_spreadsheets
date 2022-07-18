@@ -56,7 +56,7 @@ class CRUDCharityProject(CRUDBase):
     ) -> List[CharityProject]:
         projects: Result = await session.execute(
             select(CharityProject).where(
-                CharityProject.fully_invested == true()
+                CharityProject.fully_invested
             ).order_by(
                 func.julianday(CharityProject.close_date) -
                 func.julianday(CharityProject.create_date)
