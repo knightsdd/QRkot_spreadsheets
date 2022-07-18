@@ -1,8 +1,8 @@
+from datetime import datetime as dt
 from typing import List
 
-from datetime import datetime as dt
-
 from aiogoogle import Aiogoogle
+
 from app.core.config import settings
 from app.models import CharityProject
 
