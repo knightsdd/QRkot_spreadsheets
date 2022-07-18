@@ -2,7 +2,7 @@ from datetime import datetime as dt
 from typing import List, Optional
 
 from fastapi.encoders import jsonable_encoder
-from sqlalchemy import func, select, true
+from sqlalchemy import func, select
 from sqlalchemy.engine import Result
 from sqlalchemy.ext.asyncio import AsyncSession
 
