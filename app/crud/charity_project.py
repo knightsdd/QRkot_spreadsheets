@@ -1,8 +1,8 @@
 from datetime import datetime as dt
-from typing import Optional
+from typing import List, Optional
 
 from fastapi.encoders import jsonable_encoder
-from sqlalchemy import select
+from sqlalchemy import func, select, true
 from sqlalchemy.engine import Result
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -49,6 +49,21 @@ class CRUDCharityProject(CRUDBase):
         await session.commit()
         await session.refresh(db_project)
         return db_project
+
+    async def get_projects_by_completion_rate(
+        self,
+        session: AsyncSession
+    ) -> List[CharityProject]:
+        projects: Result = await session.execute(
+            select(CharityProject).where(
+                CharityProject.fully_invested == true()
+            ).order_by(
+                func.julianday(CharityProject.close_date) -
+                func.julianday(CharityProject.create_date)
+            )
+        )
+        projects = projects.scalars().all()
+        return projects
 
 
 charity_project_crud = CRUDCharityProject(CharityProject)
